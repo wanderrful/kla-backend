@@ -1,6 +1,8 @@
 const express = require("express");
 const pg = require("pg");
 
+const api = require("routes/api");
+
 require("dotenv").config();
 
 const app = new express();
