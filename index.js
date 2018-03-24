@@ -1,68 +1,39 @@
 const express = require("express");
-const pg = require("pg");
-
-const api = require("routes/api");
+const path = require("path");
+const bodyParser = require("body-parser");
 
 require("dotenv").config();
 
-const app = new express();
-const db = pg.Client({
-    connectionString: process.env.DB_URL
-});
+const api = require("./routes/api");
 
+const app = new express();
 
 
 
 COLUMNS = [
-    "query",
-    "answer"
+    "id",
+    "word_kr",
+    "word_en"
 ];
 
 
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "pug");
 
 app.set("port", (process.env.PORT || 3000));
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use("/", api);
 
-app.post("/api/words/create", (req, res) => {
-    /*  Adds a new word to the database.
-     *  
-     *  Syntax: 
-     *  /api/words/create?q=WORD&a=ANSWER
-     */
-    const { q, a } = req.query;
-
-
-    if (!q || !a) {
-        res.json({
-            error: "Missing required param \'q\' or \'a\'"
-        });
-        return;
-    }
-
-    db.query(`
-        INSERT INTO ${process.env.DB_TABLE_NAME} 
-        VALUES (${q}, ${a})
-    `, r => {
-        res.json([]);
-        return;
-    });
+/*
+app.use((req, res, next) => {
+    let err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
-
-app.get("/api/words", (req, res) => {
-    /*  Syntax: 
-     *  /api/words
-     */
-
-    db.query(`
-        SELECT *
-        FROM ${process.env.DB_TABLE_NAME}
-    `, r => {
-        res.json([]);
-        return;
-    });
-});
-
+*/
 
 
 app.listen(app.get("port"), () => {
