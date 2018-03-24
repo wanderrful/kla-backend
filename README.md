@@ -1,0 +1,3 @@
+This is the back-end half of my Korean-Learning-App project, implementing a RESTful API which serves quiz and answer content to the front-end on client request through a PostgreSQL database that is hosted on Heroku.  Intentionally missing from the repo is a simple .env file to define: the database URL to be used (DB_URL), the port number to be used for the app (PORT), and the table name that we will be working with (DB_TABLE_NAME).
+
+Well, thanks for reading!
