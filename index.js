@@ -10,13 +10,6 @@ const app = new express();
 
 
 
-COLUMNS = [
-    "id",
-    "word_kr",
-    "word_en"
-];
-
-
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
